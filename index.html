@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main>
+        <div class="resultado invisible">
+            <p class="resultado__texto"></p>
+        </div>
+        <div class="formulario">
+            <div class="campo">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+            <div class="campo">
+                <label for="ejercicios">Nota de ejercicios:</label>
+                <input type="number" id="ejercicios" name="ejercicios" min="0" max="10" value="0">
+            </div>
+            <div class="campo">
+                <label for="teorico">Nota del exámen teórico:</label>
+                <input type="number" id="teorico" name="teorico" min="0" max="10" value="0">
+            </div>
+            <div class="campo">
+                <label for="práctico">Nota del exámen práctico:</label>
+                <input type="number" id="práctico" name="práctico" min="0" max="10" value="0">
+            </div>
+            <div class="campo">
+                <label for="proyecto">Nota del proyecto:</label>
+                <input type="number" id="proyecto" name="proyecto" min="0" max="10" value="0">
+            </div>
+            <div class="botones">
+                <input type="button" onclick="calcular()" value="Calcular">
+                <input type="button" onclick="borrar()" value="Borrar">
+            </div>
+        </div>
+    </main>
+    <script>
+        function calcular() {
+            var nombre = document.getElementById("nombre").value;
+            var ejercicios = parseFloat(document.getElementById("ejercicios").value);
+            var teorico = parseFloat(document.getElementById("teorico").value);
+            var práctico = parseFloat(document.getElementById("práctico").value);
+            var proyecto = parseFloat(document.getElementById("proyecto").value);
+            var resultado = document.querySelector(".resultado");
+            var textoResultado = document.querySelector(".resultado__texto");
+
+            var notaFinal = ((ejercicios + teorico) * 0.2) + ((práctico + proyecto) * 0.3);
+
+            if (notaFinal >= 5) {
+                textoResultado.innerHTML = "Has aprobado " + nombre + ", con una nota final de " + notaFinal.toFixed(2);
+                resultado.classList.add("verde");
+            } else {
+                textoResultado.innerHTML = "Has suspendido " + nombre + ", con una nota final de " + notaFinal.toFixed(2);
+                resultado.classList.add("rojo");
+            }
+
+            resultado.classList.remove("invisible");
+        }
+
+        function borrar() {
+            var resultado = document.querySelector(".resultado");
+            
+            document.getElementById("nombre").value = "";
+            document.getElementById("ejercicios").value = "0";
+            document.getElementById("teorico").value = "0";
+            document.getElementById("práctico").value = "0";
+            document.getElementById("proyecto").value = "0";
+            document.querySelector(".resultado__texto").innerHTML = "";
+
+            resultado.classList.add("invisible");
+        }
+    </script>
+</body>
+
+</html>
